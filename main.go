@@ -1,21 +1,23 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/alvinarthas/myrepo/config"
+	routes "github.com/alvinarthas/myrepo/handlers/routes"
 )
 
 func main() {
-	r := chi.NewRouter()
-	r.Use(middleware.RequestID)
-	r.Use(middleware.Logger)
-	r.Use(middleware.Recoverer)
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
-	})
+	var (
+		port   = config.API_PORT
+		router = routes.GetRouter()
+	)
 
-	http.ListenAndServe(":3333", r)
+	log.Printf("Service started. Listening on port: %s", port)
+	err := http.ListenAndServe(":"+port, router)
+	if err != nil {
+		log.Printf("Failed running service without TLS. Listening on port:%s bind: address already in use", port)
+	}
 }
