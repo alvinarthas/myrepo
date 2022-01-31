@@ -8,7 +8,7 @@ import (
 func DummyRoutes() *chi.Mux {
 
 	routes := chi.NewRouter()
-	routes.Get("/", controller.GetDummy)
+	routes.Get("/", controller.GetDummyList)
 
 	return routes
 
