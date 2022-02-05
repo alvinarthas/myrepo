@@ -1,20 +1,17 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/alvinarthas/myrepo/business/model"
+	"github.com/alvinarthas/myrepo/business/domain/dummy"
 	"github.com/alvinarthas/myrepo/utils/response"
 )
 
 func GetDummyList(res http.ResponseWriter, req *http.Request) {
-
-	data := model.Dummy{
-		Name:     "Arthas King",
-		Adress:   "Wakanda",
-		Age:      12,
-		Type:     "Undead",
-		IsActive: true,
+	data, err := dummy.GetDummyList()
+	if err != nil {
+		log.Println(err)
 	}
 
 	response.Success(res, http.StatusOK, data, nil)

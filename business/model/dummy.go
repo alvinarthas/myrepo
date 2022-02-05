@@ -1,9 +1,10 @@
 package model
 
 type Dummy struct {
+	ID       string `json:"id"`
 	Name     string `json:"name"`
 	Age      int    `json:"age"`
-	Adress   string `json:"address"`
+	Address  string `json:"address"`
 	IsActive bool   `json:"is_active"`
 	Type     string `json:"type"`
 }

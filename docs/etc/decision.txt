@@ -1,0 +1,4 @@
+
+
+1. Controller as state of logic/flow nya
+2. Domain as part of big process, inside domain consist of some sql flow
