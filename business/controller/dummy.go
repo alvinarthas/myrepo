@@ -25,7 +25,7 @@ func GetDummy(res http.ResponseWriter, req *http.Request) {
 
 func CreateDummy(res http.ResponseWriter, req *http.Request) {
 
-	var payload model.CreateDummy
+	var payload model.CreateDummyRequest
 
 	decoder := json.NewDecoder(req.Body)
 	if err := decoder.Decode(&payload); err != nil {
