@@ -5,6 +5,7 @@ import (
 
 	"github.com/alvinarthas/myrepo/business/model"
 	"github.com/alvinarthas/myrepo/connection/mysql"
+	"github.com/google/uuid"
 )
 
 var db = mysql.Connect()
@@ -12,14 +13,12 @@ var db = mysql.Connect()
 func getDummyListSQL() ([]model.Dummy, error) {
 	var dummies []model.Dummy
 
-	rows, err := db.Query("SELECT id, name, age, address FROM dummy")
+	rows, err := db.Query(GET_DUMMY_LIST_STATEMENT)
 	if err != nil {
 		return []model.Dummy{}, err
-		// return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
 	}
 	defer rows.Close()
 
-	// Loop through rows, using Scan to assign column data to struct fields.
 	for rows.Next() {
 		var dummy model.Dummy
 		if err := rows.Scan(
@@ -28,17 +27,42 @@ func getDummyListSQL() ([]model.Dummy, error) {
 			&dummy.Age,
 			&dummy.Address,
 		); err != nil {
-			log.Println(err)
 			return []model.Dummy{}, err
-			// return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
 		}
 		dummies = append(dummies, dummy)
 	}
 	if err := rows.Err(); err != nil {
-		log.Println(err)
 		return []model.Dummy{}, err
-		// return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
 	}
 
 	return dummies, nil
+}
+
+func createDummySQL(payload model.CreateDummyRequest) error {
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Generate UUID
+	dummyID := uuid.Must(uuid.NewRandom())
+	_, err = tx.Exec(CREATE_DUMMY_STATEMENT,
+		dummyID,
+		payload.Name,
+		payload.Address,
+		payload.Age,
+		payload.Type,
+	)
+	if err != nil {
+		tx.Rollback()
+		log.Println(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Println(err)
+	}
+
+	return nil
 }

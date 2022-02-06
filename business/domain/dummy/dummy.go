@@ -7,3 +7,7 @@ import (
 func GetDummyList() ([]model.Dummy, error) {
 	return getDummyListSQL()
 }
+
+func CreateDummy(payload model.CreateDummyRequest) error {
+	return createDummySQL(payload)
+}
