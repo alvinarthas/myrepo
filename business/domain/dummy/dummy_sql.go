@@ -53,6 +53,35 @@ func createDummySQL(payload model.CreateDummyRequest) error {
 		payload.Address,
 		payload.Age,
 		payload.Type,
+		true,
+	)
+	if err != nil {
+		tx.Rollback()
+		log.Println(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Println(err)
+	}
+
+	return nil
+}
+
+func updateDummySQL(payload model.UpdateDummyRequest) error {
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Generate UUID
+	_, err = tx.Exec(UPDATE_DUMMY_STATEMENT,
+		payload.Name,
+		payload.Address,
+		payload.Age,
+		payload.Type,
+		payload.ID,
 	)
 	if err != nil {
 		tx.Rollback()

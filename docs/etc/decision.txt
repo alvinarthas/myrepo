@@ -2,3 +2,7 @@
 
 1. Controller as state of logic/flow nya
 2. Domain as part of big process, inside domain consist of some sql flow
+3. Use specific status code
+4. Current Version will update all, so will not check if data not included then the data will not replaced
+5. Struct use Single Responsibility
+6. use plural noun for api routes

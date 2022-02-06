@@ -11,3 +11,7 @@ func GetDummyList() ([]model.Dummy, error) {
 func CreateDummy(payload model.CreateDummyRequest) error {
 	return createDummySQL(payload)
 }
+
+func UpdateDummy(payload model.UpdateDummyRequest) error {
+	return updateDummySQL(payload)
+}

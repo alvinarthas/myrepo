@@ -1,1 +1,3 @@
 1. Ketika Run service, connection di db itu dilakukan diawal(dipanggil di main) atau ketika pas dipake aja mendingan?
+2. Raw query manage, or use arguments ?
+3. When PUT, PATCH, DELETE, should we use id as param ?

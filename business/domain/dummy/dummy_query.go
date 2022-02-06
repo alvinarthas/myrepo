@@ -8,7 +8,11 @@ const (
 			name,
 			address,
 			age,
-			type
-		) VALUES (?, ?, ?, ?, ?)
+			type,
+			is_active
+		) VALUES (?, ?, ?, ?, ?, ?)
+	`
+	UPDATE_DUMMY_STATEMENT = `
+		UPDATE dummy SET name = ?, address = ?, age = ?, type = ? WHERE id = ?
 	`
 )

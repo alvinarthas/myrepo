@@ -19,7 +19,7 @@ func GetRouter() *chi.Mux {
 		w.Write([]byte("hello world, welcome to my repo"))
 	})
 
-	router.Mount("/dummy", DummyRoutes())
+	router.Mount("/dummies", DummyRoutes())
 
 	return router
 
