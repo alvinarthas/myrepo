@@ -6,3 +6,4 @@
 4. Current Version will update all, so will not check if data not included then the data will not replaced
 5. Struct use Single Responsibility
 6. use plural noun for api routes
+7. Use schema json, able to simplyfy validation and do test cases

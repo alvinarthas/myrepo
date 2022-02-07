@@ -9,7 +9,10 @@ import (
 	"github.com/alvinarthas/myrepo/business/model"
 	"github.com/alvinarthas/myrepo/utils/response"
 	"github.com/go-chi/chi"
+	"gopkg.in/go-playground/validator.v9"
 )
+
+var validate = validator.New()
 
 func GetDummyList(res http.ResponseWriter, req *http.Request) {
 	data, err := dummy.GetDummyList()
@@ -32,16 +35,20 @@ func GetDummy(res http.ResponseWriter, req *http.Request) {
 }
 
 func CreateDummy(res http.ResponseWriter, req *http.Request) {
-
 	var payload model.CreateDummyRequest
 
 	decoder := json.NewDecoder(req.Body)
 	if err := decoder.Decode(&payload); err != nil {
-		log.Println(err)
+		log.Println("Decoding: ", err)
+	}
+
+	err := validate.Struct(payload)
+	if err != nil {
+		log.Println("Validate: ", err)
 	}
 
 	if err := dummy.CreateDummy(payload); err != nil {
-		log.Println(err)
+		log.Println("Domain: ", err)
 	}
 
 	response.Success(res, http.StatusCreated, []string{}, nil)
@@ -59,6 +66,12 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 	}
 
 	payload.ID = id
+
+	err := validate.Struct(payload)
+	if err != nil {
+		log.Println("Validate: ", err)
+	}
+
 	if err := dummy.UpdateDummy(payload); err != nil {
 		log.Println(err)
 	}
