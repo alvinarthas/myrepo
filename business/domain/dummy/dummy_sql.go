@@ -26,6 +26,8 @@ func getDummyListSQL() ([]model.Dummy, error) {
 			&dummy.Name,
 			&dummy.Age,
 			&dummy.Address,
+			&dummy.IsActive,
+			&dummy.Type,
 		); err != nil {
 			return []model.Dummy{}, err
 		}
@@ -36,6 +38,24 @@ func getDummyListSQL() ([]model.Dummy, error) {
 	}
 
 	return dummies, nil
+}
+
+func getDummySQL(id string) (model.Dummy, error) {
+
+	var data model.Dummy
+	if err := db.QueryRow(GET_DUMMY_BY_ID_STATEMENT, id).Scan(
+		&data.ID,
+		&data.Name,
+		&data.Age,
+		&data.Address,
+		&data.IsActive,
+		&data.Type,
+	); err != nil {
+		log.Println(err)
+		return data, err
+	}
+
+	return data, nil
 }
 
 func createDummySQL(payload model.CreateDummyRequest) error {
@@ -58,11 +78,13 @@ func createDummySQL(payload model.CreateDummyRequest) error {
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
+		return err
 	}
 
 	err = tx.Commit()
 	if err != nil {
 		log.Println(err)
+		return err
 	}
 
 	return nil
@@ -86,11 +108,13 @@ func updateDummySQL(payload model.UpdateDummyRequest) error {
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
+		return err
 	}
 
 	err = tx.Commit()
 	if err != nil {
 		log.Println(err)
+		return err
 	}
 
 	return nil

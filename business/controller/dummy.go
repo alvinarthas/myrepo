@@ -21,6 +21,13 @@ func GetDummyList(res http.ResponseWriter, req *http.Request) {
 }
 
 func GetDummy(res http.ResponseWriter, req *http.Request) {
+	id := chi.URLParam(req, "id")
+	data, err := dummy.GetDummy(id)
+	if err != nil {
+		log.Println(err)
+	}
+
+	response.Success(res, http.StatusOK, data, nil)
 
 }
 

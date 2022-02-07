@@ -1,8 +1,9 @@
 package dummy
 
 const (
-	GET_DUMMY_LIST_STATEMENT = `SELECT id, name, age, address FROM dummy`
-	CREATE_DUMMY_STATEMENT   = `
+	GET_DUMMY_LIST_STATEMENT  = `SELECT id, name, age, address, is_active, type FROM dummy`
+	GET_DUMMY_BY_ID_STATEMENT = `SELECT id, name, age, address, is_active, type FROM dummy WHERE id = ?`
+	CREATE_DUMMY_STATEMENT    = `
 		INSERT INTO dummy (
 			id,
 			name,
