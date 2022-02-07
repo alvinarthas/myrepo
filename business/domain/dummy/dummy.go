@@ -19,3 +19,7 @@ func CreateDummy(payload model.CreateDummyRequest) error {
 func UpdateDummy(payload model.UpdateDummyRequest) error {
 	return updateDummySQL(payload)
 }
+
+func DeleteDummy(id string) error {
+	return deleteDummySQL(id)
+}

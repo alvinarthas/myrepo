@@ -67,7 +67,13 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 }
 
 func DeleteDummy(res http.ResponseWriter, req *http.Request) {
+	id := chi.URLParam(req, "id")
+	err := dummy.DeleteDummy(id)
+	if err != nil {
+		log.Println(err)
+	}
 
+	response.Success(res, http.StatusOK, []string{}, nil)
 }
 
 func UpsertDummy(res http.ResponseWriter, req *http.Request) {

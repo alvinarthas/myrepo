@@ -9,9 +9,10 @@ func DummyRoutes() *chi.Mux {
 
 	routes := chi.NewRouter()
 	routes.Get("/", controller.GetDummyList)
-	routes.Get("/{id}", controller.GetDummy)
 	routes.Post("/", controller.CreateDummy)
+	routes.Get("/{id}", controller.GetDummy)
 	routes.Put("/{id}", controller.UpdateDummy)
+	routes.Delete("/{id}", controller.DeleteDummy)
 
 	return routes
 

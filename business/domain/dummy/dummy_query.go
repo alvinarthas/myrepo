@@ -16,4 +16,5 @@ const (
 	UPDATE_DUMMY_STATEMENT = `
 		UPDATE dummy SET name = ?, address = ?, age = ?, type = ? WHERE id = ?
 	`
+	DELETE_DUMMY_STATEMENT = `DELETE FROM dummy WHERE id = ?`
 )

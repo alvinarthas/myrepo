@@ -119,3 +119,27 @@ func updateDummySQL(payload model.UpdateDummyRequest) error {
 
 	return nil
 }
+
+func deleteDummySQL(id string) error {
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Println(err)
+	}
+
+	// Generate UUID
+	_, err = tx.Exec(DELETE_DUMMY_STATEMENT, id)
+	if err != nil {
+		tx.Rollback()
+		log.Println(err)
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return nil
+}
