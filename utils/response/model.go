@@ -7,8 +7,7 @@ type SuccessResponse struct {
 }
 
 type ErrorResponse struct {
-	DevMessage    string      `json:"dev_message,omitempty"`
-	ClientMessage string      `json:"client_message,omitempty"`
-	Code          int         `json:"code,omitempty"`
-	Data          interface{} `json:"data,omitempty"`
+	Caused  string `json:"caused,omitempty"`
+	Message string `json:"message,omitempty"`
+	Code    int    `json:"code,omitempty"`
 }

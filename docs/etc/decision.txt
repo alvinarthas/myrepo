@@ -7,3 +7,5 @@
 5. Struct use Single Responsibility
 6. use plural noun for api routes
 7. Use schema json, able to simplyfy validation and do test cases
+8. Soal model, pengennya ada model khusus context tertentu, dan satu lagi model general yg bisa digunain dimana"
+9. Karena belom ada datadog, jadi di error causednya, disertain root functionnya, biar tau ketika ada error, bagian mana yg harus langsung di check
