@@ -2,10 +2,10 @@ package response
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/alvinarthas/myrepo/utils/common"
+	logger "github.com/alvinarthas/myrepo/utils/log"
 )
 
 func Success(res http.ResponseWriter, httpCode int, data interface{}, pagination interface{}) {
@@ -19,8 +19,7 @@ func Success(res http.ResponseWriter, httpCode int, data interface{}, pagination
 	}
 
 	if err := json.NewEncoder(res).Encode(response); err != nil {
-		// logger.Fatal(err.Error(), nil)
-		log.Println(err)
+		logger.Fatal("Failed on Encoding the Response", err)
 	}
 }
 
@@ -35,6 +34,6 @@ func Error(res http.ResponseWriter, errorData common.Error) {
 	}
 
 	if err := json.NewEncoder(res).Encode(response); err != nil {
-		log.Println(err)
+		logger.Fatal("Failed on Encoding the Response", err)
 	}
 }

@@ -3,9 +3,8 @@ package mysql
 import (
 	"database/sql"
 	"fmt"
-	"log"
-	"time"
 
+	logger "github.com/alvinarthas/myrepo/utils/log"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -15,9 +14,8 @@ var (
 
 func init() {
 
-	var connectionString string
-	log.Println("INIT MYSQL CONNECTION")
-	connectionString = fmt.Sprintf(
+	logger.Info("INIT MYSQL CONNECTION", nil)
+	connectionString := fmt.Sprintf(
 		"%s:%s@tcp(%s:3306)/%s",
 		"root",
 		"password",
@@ -27,16 +25,16 @@ func init() {
 
 	conn, err := sql.Open("mysql", connectionString)
 	if err != nil {
-		log.Println("Connection error: ", err)
+		logger.Fatal("Failed on connecting to MySQL", err)
 	}
 
 	if err = conn.Ping(); err != nil {
-		log.Println("Failed verifies a connection to the database", nil)
+		logger.Fatal("Failed verifies a connection to the database", err)
 	}
 
-	conn.SetConnMaxLifetime(time.Minute * 3)
-	conn.SetMaxOpenConns(10)
-	conn.SetMaxIdleConns(10)
+	// conn.SetConnMaxLifetime(time.Minute * 3)
+	// conn.SetMaxOpenConns(10)
+	// conn.SetMaxIdleConns(10)
 
 	db = conn
 

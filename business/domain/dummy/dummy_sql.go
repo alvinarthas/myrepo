@@ -136,20 +136,20 @@ func deleteDummySQL(id string) common.Error {
 	tx, err := db.Begin()
 	if err != nil {
 		err = fmt.Errorf(`%s%s`, "[deleteDummySQL] ", err.Error())
-		return common.RecordError(err, http.StatusInternalServerError, "Failed Update Dummy")
+		return common.RecordError(err, http.StatusInternalServerError, "Failed on Deleting Dummy")
 	}
 
 	// Generate UUID
 	_, err = tx.Exec(DELETE_DUMMY_STATEMENT, id)
 	if err != nil {
 		err = fmt.Errorf(`%s%s`, "[deleteDummySQL] ", err.Error())
-		return common.RecordError(err, http.StatusInternalServerError, "Failed Update Dummy")
+		return common.RecordError(err, http.StatusInternalServerError, "Failed on Deleting Dummy")
 	}
 
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf(`%s%s`, "[deleteDummySQL] ", err.Error())
-		return common.RecordError(err, http.StatusInternalServerError, "Failed Update Dummy")
+		return common.RecordError(err, http.StatusInternalServerError, "Failed on Deleting Dummy")
 	}
 
 	return common.Error{}

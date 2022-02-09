@@ -1,3 +1,7 @@
 1. Ketika Run service, connection di db itu dilakukan diawal(dipanggil di main) atau ketika pas dipake aja mendingan?
 2. Raw query manage, or use arguments ?
 3. When PUT, PATCH, DELETE, should we use id as param ?
+4. Kira-kira, log level bisa di kategoriin berdasarkan http status code ga yah?
+5. Bisa ga log yg text formatted dan bewarna di store di kube?
+6. Settingan Connection di DB itu harus gimana? dan di set di code tiap service atau via infra aja?
+7. Ketika Return Success Response, kudu di log juga ga? level log nya info ?

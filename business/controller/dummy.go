@@ -9,6 +9,7 @@ import (
 	"github.com/alvinarthas/myrepo/business/domain/dummy"
 	"github.com/alvinarthas/myrepo/business/model"
 	"github.com/alvinarthas/myrepo/utils/common"
+	logger "github.com/alvinarthas/myrepo/utils/log"
 	"github.com/alvinarthas/myrepo/utils/response"
 	"github.com/go-chi/chi"
 	"gopkg.in/go-playground/validator.v9"
@@ -29,8 +30,10 @@ func GetDummyList(res http.ResponseWriter, req *http.Request) {
 func GetDummy(res http.ResponseWriter, req *http.Request) {
 	id := chi.URLParam(req, "id")
 	if id == "" {
+		message := "Failed on Get Dummy"
 		err := fmt.Errorf(`%s%s`, "[GetDummy] ", errors.New("ID should not be empty"))
-		response.Error(res, common.RecordError(err, http.StatusBadRequest, "Failed on Get Dummy"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
 		return
 	}
 
@@ -49,15 +52,19 @@ func CreateDummy(res http.ResponseWriter, req *http.Request) {
 
 	decoder := json.NewDecoder(req.Body)
 	if err := decoder.Decode(&payload); err != nil {
+		message := "Failed on Creating Dummy"
 		err = fmt.Errorf(`%s%s`, "[CreateDummy] ", err.Error())
-		response.Error(res, common.RecordError(err, http.StatusBadRequest, "Failed on Creating Dummy"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
 		return
 	}
 
 	err := validate.Struct(payload)
 	if err != nil {
+		message := "Please check your data input"
 		err = fmt.Errorf(`%s%s`, "[CreateDummy] ", err.Error())
-		response.Error(res, common.RecordError(err, http.StatusBadRequest, "Please check your data input"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
 		return
 	}
 
@@ -74,11 +81,20 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 	var payload model.UpdateDummyRequest
 
 	id := chi.URLParam(req, "id")
+	if id == "" {
+		message := "Failed on Updating Dummy"
+		err := fmt.Errorf(`%s%s`, "[GetDummy] ", errors.New("ID should not be empty"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
+		return
+	}
 
 	decoder := json.NewDecoder(req.Body)
 	if err := decoder.Decode(&payload); err != nil {
+		message := "Failed on Updating Dummy"
 		err = fmt.Errorf(`%s%s`, "[UpdateDummy] ", err.Error())
-		response.Error(res, common.RecordError(err, http.StatusBadRequest, "Failed on Updating Dummy"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
 		return
 	}
 
@@ -86,8 +102,10 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 
 	err := validate.Struct(payload)
 	if err != nil {
+		message := "Please check your data input"
 		err = fmt.Errorf(`%s%s`, "[UpdateDummy] ", err.Error())
-		response.Error(res, common.RecordError(err, http.StatusBadRequest, "Please check your data input"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
 		return
 	}
 
@@ -101,6 +119,14 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 
 func DeleteDummy(res http.ResponseWriter, req *http.Request) {
 	id := chi.URLParam(req, "id")
+	if id == "" {
+		message := "Failed on Deleting Dummy"
+		err := fmt.Errorf(`%s%s`, "[GetDummy] ", errors.New("ID should not be empty"))
+		logger.Error(message, err)
+		response.Error(res, common.RecordError(err, http.StatusBadRequest, message))
+		return
+	}
+
 	err := dummy.DeleteDummy(id)
 	if err.Error != nil {
 		response.Error(res, err)

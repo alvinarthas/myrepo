@@ -1,6 +1,6 @@
 package common
 
-import "log"
+import logger "github.com/alvinarthas/myrepo/utils/log"
 
 type Error struct {
 	Error   error  `json:"error"`
@@ -9,7 +9,8 @@ type Error struct {
 }
 
 func RecordError(err error, code int, message string) Error {
-	log.Println(err)
+	logger.Error(message, err)
+
 	errorData := Error{
 		Error:   err,
 		Code:    code,
