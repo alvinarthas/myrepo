@@ -9,7 +9,7 @@ import (
 	"github.com/alvinarthas/myrepo/business/domain/dummy"
 	"github.com/alvinarthas/myrepo/business/model"
 	"github.com/alvinarthas/myrepo/utils/common"
-	logger "github.com/alvinarthas/myrepo/utils/log"
+	"github.com/alvinarthas/myrepo/utils/logger"
 	"github.com/alvinarthas/myrepo/utils/response"
 	"github.com/go-chi/chi"
 	"gopkg.in/go-playground/validator.v9"

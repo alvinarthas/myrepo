@@ -9,3 +9,5 @@
 7. Use schema json, able to simplyfy validation and do test cases
 8. Soal model, pengennya ada model khusus context tertentu, dan satu lagi model general yg bisa digunain dimana"
 9. Karena belom ada datadog, jadi di error causednya, disertain root functionnya, biar tau ketika ada error, bagian mana yg harus langsung di check
+10. Config only for the adjustable value, const for Static and will not change
+11. di config ga pake logger, karena bakal kena import cycling not allowed

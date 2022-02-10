@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/alvinarthas/myrepo/utils/common"
-	logger "github.com/alvinarthas/myrepo/utils/log"
+	"github.com/alvinarthas/myrepo/utils/logger"
 )
 
 func Success(res http.ResponseWriter, httpCode int, data interface{}, pagination interface{}) {

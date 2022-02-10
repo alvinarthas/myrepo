@@ -7,12 +7,12 @@ import (
 	"github.com/alvinarthas/myrepo/config"
 	"github.com/alvinarthas/myrepo/connection/mysql"
 	routes "github.com/alvinarthas/myrepo/handlers/routes"
-	logger "github.com/alvinarthas/myrepo/utils/log"
+	"github.com/alvinarthas/myrepo/utils/logger"
 )
 
 func main() {
 	var (
-		port   = config.API_PORT
+		port   = config.CONFIG.Server.Port
 		router = routes.GetRouter()
 	)
 

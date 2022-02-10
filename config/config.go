@@ -1,9 +1,31 @@
 package config
 
+import (
+	"log"
+	"os"
+
+	"gopkg.in/yaml.v2"
+)
+
 var (
-	API_PORT string
+	CONFIG     Config
+	configPath = "./config/config.yml"
 )
 
 func init() {
-	API_PORT = "80"
+
+	// Open config file
+	file, err := os.Open(configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	// Init new YAML decode
+	d := yaml.NewDecoder(file)
+
+	// Start YAML decoding from file
+	if err := d.Decode(&CONFIG); err != nil {
+		log.Fatal(err)
+	}
 }

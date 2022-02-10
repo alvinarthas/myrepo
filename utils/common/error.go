@@ -1,6 +1,6 @@
 package common
 
-import logger "github.com/alvinarthas/myrepo/utils/log"
+import "github.com/alvinarthas/myrepo/utils/logger"
 
 type Error struct {
 	Error   error  `json:"error"`
