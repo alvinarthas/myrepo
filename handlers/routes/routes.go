@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 
+	"github.com/alvinarthas/myrepo/utils/health"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -15,6 +16,7 @@ func GetRouter() *chi.Mux {
 
 	setupMiddleware(router)
 
+	router.Get("/health", health.HealthStatus)
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("hello world, welcome to my repo"))
 	})

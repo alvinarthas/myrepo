@@ -25,15 +25,15 @@ func init() {
 		config.CONFIG.Connection.MySQL.DB,
 	)
 
-	db, err := sql.Open("mysql", connectionString)
+	conn, err := sql.Open("mysql", connectionString)
 	if err != nil {
 		logger.Fatal("Failed on connecting to MySQL", err)
 	}
 
-	if err = db.Ping(); err != nil {
+	if err = conn.Ping(); err != nil {
 		logger.Fatal("Failed verifies a connection to the database", err)
 	}
-
+	db = conn
 	// conn.SetConnMaxLifetime(time.Minute * 3)
 	// conn.SetMaxOpenConns(10)
 	// conn.SetMaxIdleConns(10)
