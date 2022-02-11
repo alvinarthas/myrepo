@@ -3,14 +3,17 @@ package routes
 import (
 	"net/http"
 
+	_ "github.com/alvinarthas/myrepo/docs"
 	"github.com/alvinarthas/myrepo/utils/health"
 	"github.com/alvinarthas/myrepo/utils/middleware"
 	"github.com/go-chi/chi"
 	chiMiddleware "github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 // GetRouter returns a Mux object that implements the Router interface.
+
 func GetRouter() *chi.Mux {
 
 	router := chi.NewRouter()
@@ -18,6 +21,10 @@ func GetRouter() *chi.Mux {
 	setupMiddleware(router)
 
 	router.Get("/health", health.HealthStatus)
+
+	router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:80/swagger/doc.json"), //The url pointing to API definition
+	))
 
 	apiV1 := router.Group(nil)
 	apiV1.Use(middleware.AppAuthorization)

@@ -17,6 +17,15 @@ import (
 
 var validate = validator.New()
 
+// GetDummyList godoc
+// @Summary      List accounts
+// @Description  get accounts
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        q    query     string  false  "name search by q"  Format(email)
+// @Router       /dummies [get]
+
 func GetDummyList(res http.ResponseWriter, req *http.Request) {
 	data, err := dummy.GetDummyList()
 	if err.Error != nil {
@@ -27,6 +36,14 @@ func GetDummyList(res http.ResponseWriter, req *http.Request) {
 	response.Success(res, http.StatusOK, data, nil)
 }
 
+// GetDummyID godoc
+// @Summary      List accounts
+// @Description  get accounts
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        q    query     string  false  "name search by q"  Format(email)
+// @Router       /dummies/{id} [get]
 func GetDummy(res http.ResponseWriter, req *http.Request) {
 	id := chi.URLParam(req, "id")
 	if id == "" {
