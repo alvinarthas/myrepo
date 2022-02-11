@@ -1,5 +1,6 @@
 server:
   port: 80
+  x-api-key: "xxxx-yyyy-zzzz"
 connection:
   mysql:
     host: "localhost"

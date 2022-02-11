@@ -7,7 +7,8 @@ type Config struct {
 }
 
 type Server struct {
-	Port string `yaml:"port"`
+	Port    string `yaml:"port"`
+	XApiKey string `yaml:"x-api-key"`
 }
 
 type Connection struct {

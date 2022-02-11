@@ -4,8 +4,9 @@ import (
 	"net/http"
 
 	"github.com/alvinarthas/myrepo/utils/health"
+	"github.com/alvinarthas/myrepo/utils/middleware"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	chiMiddleware "github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 )
 
@@ -17,11 +18,12 @@ func GetRouter() *chi.Mux {
 	setupMiddleware(router)
 
 	router.Get("/health", health.HealthStatus)
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world, welcome to my repo"))
-	})
 
-	router.Mount("/dummies", DummyRoutes())
+	apiV1 := router.Group(nil)
+	apiV1.Use(middleware.AppAuthorization)
+	apiV1.Route("/v1", func(router chi.Router) {
+		router.Mount("/dummies", DummyRoutes())
+	})
 
 	return router
 
@@ -33,8 +35,8 @@ func setupMiddleware(router *chi.Mux) {
 	// Add a own middleware.
 	router.Use(
 		setCorsOptions(),
-		middleware.Recoverer,
-		middleware.Logger,
+		chiMiddleware.Recoverer,
+		chiMiddleware.Logger,
 	)
 
 }
