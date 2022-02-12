@@ -16,8 +16,9 @@ An Experiment Golang Repository for handling REST, RPC, etc.
 
 # How to Run
 ``` bash
-    go run main.go
+    make run
 ```
+Make Run will init swagger documentation and run the server
 
 # Structure
 ``` bash
