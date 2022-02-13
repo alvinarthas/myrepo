@@ -21,5 +21,5 @@ func HealthStatus(res http.ResponseWriter, req *http.Request) {
 		"mysql": mysqlStatus,
 	}
 
-	response.Success(res, http.StatusOK, result, nil)
+	response.Success(res, http.StatusOK, result)
 }

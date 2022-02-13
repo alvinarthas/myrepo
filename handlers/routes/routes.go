@@ -28,7 +28,7 @@ func GetRouter() *chi.Mux {
 
 	apiV1 := router.Group(nil)
 	apiV1.Use(middleware.AppAuthorization)
-	apiV1.Route("/v1", func(router chi.Router) {
+	apiV1.Route("/api/v1", func(router chi.Router) {
 		router.Mount("/dummies", DummyRoutes())
 	})
 

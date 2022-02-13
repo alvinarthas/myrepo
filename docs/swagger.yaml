@@ -1,33 +1,305 @@
-basePath: /v2
-host: petstore.swagger.io
+basePath: /api/v1
+definitions:
+  model.CreateDummyRequest:
+    properties:
+      address:
+        type: string
+      age:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+    required:
+    - age
+    - name
+    type: object
+  model.CreateDummyResponse:
+    properties:
+      data:
+        items:
+          type: string
+        type: array
+    type: object
+  model.DeleteDummyResponse:
+    properties:
+      data:
+        items:
+          type: string
+        type: array
+    type: object
+  model.Dummy:
+    properties:
+      address:
+        type: string
+      age:
+        type: integer
+      id:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  model.GetDummyByIDResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.Dummy'
+    type: object
+  model.GetDummyListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.Dummy'
+        type: array
+      pagination:
+        $ref: '#/definitions/model.Pagination'
+    type: object
+  model.Pagination:
+    properties:
+      data_in_page:
+        type: integer
+      page:
+        type: integer
+      total_data:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  model.UpdateDummyRequest:
+    properties:
+      address:
+        type: string
+      age:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    required:
+    - age
+    - id
+    - name
+    type: object
+  model.UpdateDummyResponse:
+    properties:
+      data:
+        items:
+          type: string
+        type: array
+    type: object
+  response.ErrorResponse:
+    properties:
+      caused:
+        type: string
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+host: localhost:80
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+    email: work.alvinkhair@gmail.com
+    name: Alvin Khair Arthas
+    url: https://github.com/alvinarthas
+  description: This is a sample Repo for service
+  title: MyRepo API Documentation
   version: "1.0"
 paths:
-  /dummies/{id}:
+  /dummies:
     get:
       consumes:
       - application/json
-      description: get accounts
+      description: get list of dummy data
       parameters:
-      - description: name search by q
-        format: email
-        in: query
-        name: q
+      - description: App Secret Key
+        in: header
+        name: X-Api-Key
+        required: true
         type: string
       produces:
       - application/json
-      responses: {}
-      summary: List accounts
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.GetDummyListResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: List of Dummy
       tags:
-      - accounts
+      - Dummies
+    post:
+      consumes:
+      - application/json
+      description: create dummy data
+      parameters:
+      - description: App Secret Key
+        in: header
+        name: X-Api-Key
+        required: true
+        type: string
+      - description: Create New Dummy Data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateDummyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CreateDummyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Dummy New Data
+      tags:
+      - Dummies
+  /dummies/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete dummy data
+      parameters:
+      - description: App Secret Key
+        in: header
+        name: X-Api-Key
+        required: true
+        type: string
+      - description: Dummy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.DeleteDummyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Dummy Delete Data
+      tags:
+      - Dummies
+    get:
+      consumes:
+      - application/json
+      description: get single dummy data by ID
+      parameters:
+      - description: App Secret Key
+        in: header
+        name: X-Api-Key
+        required: true
+        type: string
+      - description: Dummy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetDummyByIDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Dummy Single Data by ID
+      tags:
+      - Dummies
+    put:
+      consumes:
+      - application/json
+      description: update dummy data - if attribute is null, it will updated as null
+      parameters:
+      - description: App Secret Key
+        in: header
+        name: X-Api-Key
+        required: true
+        type: string
+      - description: Dummy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Dummy Data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateDummyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateDummyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Dummy Update Data
+      tags:
+      - Dummies
 swagger: "2.0"

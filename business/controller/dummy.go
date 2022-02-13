@@ -18,33 +18,44 @@ import (
 var validate = validator.New()
 
 // GetDummyList godoc
-// @Summary      List accounts
-// @Description  get accounts
-// @Tags         accounts
+// @Summary      List of Dummy
+// @Description  get list of dummy data
+// @Tags         Dummies
 // @Accept       json
 // @Produce      json
-// @Param        q    query     string  false  "name search by q"  Format(email)
+// @Param X-Api-Key header string true "App Secret Key"
+// @Success      200  {array}   model.GetDummyListResponse
+// @Failure      400  {object}  response.ErrorResponse
+// @Failure      404  {object}  response.ErrorResponse
+// @Failure      500  {object}  response.ErrorResponse
 // @Router       /dummies [get]
-
 func GetDummyList(res http.ResponseWriter, req *http.Request) {
-	data, err := dummy.GetDummyList()
+	dummies, err := dummy.GetDummyList()
 	if err.Error != nil {
 		response.Error(res, err)
 		return
 	}
 
-	response.Success(res, http.StatusOK, data, nil)
+	data := model.GetDummyListResponse{
+		Data: dummies,
+	}
+	response.Success(res, http.StatusOK, data)
 }
 
-// GetDummyID godoc
-// @Summary      List accounts
-// @Description  get accounts
-// @Tags         accounts
+// GetDummy godoc
+// @Summary      Dummy Single Data by ID
+// @Description  get single dummy data by ID
+// @Tags         Dummies
 // @Accept       json
 // @Produce      json
-// @Param        q    query     string  false  "name search by q"  Format(email)
+// @Param X-Api-Key header string true "App Secret Key"
+// @Param id path string true "Dummy ID"
+// @Success      200  {object}  model.GetDummyByIDResponse
+// @Failure      400  {object}  response.ErrorResponse
+// @Failure      404  {object}  response.ErrorResponse
+// @Failure      500  {object}  response.ErrorResponse
 // @Router       /dummies/{id} [get]
-func GetDummy(res http.ResponseWriter, req *http.Request) {
+func GetDummyByID(res http.ResponseWriter, req *http.Request) {
 	id := chi.URLParam(req, "id")
 	if id == "" {
 		message := "Failed on Get Dummy"
@@ -54,16 +65,33 @@ func GetDummy(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	data, err := dummy.GetDummy(id)
+	singleDummy, err := dummy.GetDummyByID(id)
 	if err.Error != nil {
 		response.Error(res, err)
 		return
 	}
 
-	response.Success(res, http.StatusOK, data, nil)
+	data := model.GetDummyByIDResponse{
+		Data: singleDummy,
+	}
+
+	response.Success(res, http.StatusOK, data)
 
 }
 
+// CreateDummy godoc
+// @Summary      Dummy New Data
+// @Description  create dummy data
+// @Tags         Dummies
+// @Accept       json
+// @Produce      json
+// @Param X-Api-Key header string true "App Secret Key"
+// @Param data body model.CreateDummyRequest true "Create New Dummy Data"
+// @Success      200  {object}  model.CreateDummyResponse
+// @Failure      400  {object}  response.ErrorResponse
+// @Failure      404  {object}  response.ErrorResponse
+// @Failure      500  {object}  response.ErrorResponse
+// @Router       /dummies [post]
 func CreateDummy(res http.ResponseWriter, req *http.Request) {
 	var payload model.CreateDummyRequest
 
@@ -90,9 +118,23 @@ func CreateDummy(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	response.Success(res, http.StatusCreated, []string{}, nil)
+	response.Success(res, http.StatusCreated, model.CreateDummyResponse{Data: []string{}})
 }
 
+// UpdateDummy godoc
+// @Summary      Dummy Update Data
+// @Description  update dummy data - if attribute is null, it will updated as null
+// @Tags         Dummies
+// @Accept       json
+// @Produce      json
+// @Param X-Api-Key header string true "App Secret Key"
+// @Param id path string true "Dummy ID"
+// @Param data body model.UpdateDummyRequest true "Update Dummy Data"
+// @Success      200  {object}  model.UpdateDummyResponse
+// @Failure      400  {object}  response.ErrorResponse
+// @Failure      404  {object}  response.ErrorResponse
+// @Failure      500  {object}  response.ErrorResponse
+// @Router       /dummies/{id} [put]
 func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 
 	var payload model.UpdateDummyRequest
@@ -131,9 +173,22 @@ func UpdateDummy(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	response.Success(res, http.StatusOK, []string{}, nil)
+	response.Success(res, http.StatusOK, model.UpdateDummyResponse{Data: []string{}})
 }
 
+// DeleteDummy godoc
+// @Summary      Dummy Delete Data
+// @Description  delete dummy data
+// @Tags         Dummies
+// @Accept       json
+// @Produce      json
+// @Param X-Api-Key header string true "App Secret Key"
+// @Param id path string true "Dummy ID"
+// @Success      200  {object}  model.DeleteDummyResponse
+// @Failure      400  {object}  response.ErrorResponse
+// @Failure      404  {object}  response.ErrorResponse
+// @Failure      500  {object}  response.ErrorResponse
+// @Router       /dummies/{id} [delete]
 func DeleteDummy(res http.ResponseWriter, req *http.Request) {
 	id := chi.URLParam(req, "id")
 	if id == "" {
@@ -150,7 +205,7 @@ func DeleteDummy(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	response.Success(res, http.StatusOK, []string{}, nil)
+	response.Success(res, http.StatusOK, model.DeleteDummyResponse{Data: []string{}})
 }
 
 func UpsertDummy(res http.ResponseWriter, req *http.Request) {

@@ -9,8 +9,8 @@ func GetDummyList() ([]model.Dummy, common.Error) {
 	return getDummyListSQL()
 }
 
-func GetDummy(id string) (model.Dummy, common.Error) {
-	return getDummySQL(id)
+func GetDummyByID(id string) (model.Dummy, common.Error) {
+	return getDummyByIDSQL(id)
 }
 
 func CreateDummy(payload model.CreateDummyRequest) common.Error {

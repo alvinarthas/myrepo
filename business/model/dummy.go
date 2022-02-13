@@ -9,6 +9,8 @@ type Dummy struct {
 	Type     string `json:"type"`
 }
 
+// Request
+
 type CreateDummyRequest struct {
 	Name    string `json:"name" validate:"required"`
 	Age     int    `json:"age" validate:"required"`
@@ -22,4 +24,27 @@ type UpdateDummyRequest struct {
 	Age     int    `json:"age" validate:"required"`
 	Address string `json:"address"`
 	Type    string `json:"type" oneof:"Human Mutant Undead"`
+}
+
+// Response
+
+type GetDummyByIDResponse struct {
+	Data Dummy `json:"data"`
+}
+
+type GetDummyListResponse struct {
+	Data       []Dummy    `json:"data"`
+	Pagination Pagination `json:"pagination"`
+}
+
+type CreateDummyResponse struct {
+	Data []string `json:"data"`
+}
+
+type UpdateDummyResponse struct {
+	Data []string `json:"data"`
+}
+
+type DeleteDummyResponse struct {
+	Data []string `json:"data"`
 }

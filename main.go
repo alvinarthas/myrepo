@@ -10,20 +10,16 @@ import (
 	"github.com/alvinarthas/myrepo/utils/logger"
 )
 
-// @title Swagger Example API
+// @title MyRepo API Documentation
 // @version 1.0
-// @description This is a sample server Petstore server.
-// @termsOfService http://swagger.io/terms/
+// @description This is a sample Repo for service
 
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
+// @contact.name Alvin Khair Arthas
+// @contact.url https://github.com/alvinarthas
+// @contact.email work.alvinkhair@gmail.com
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host petstore.swagger.io
-// @BasePath /v2
+// @host localhost:80
+// @BasePath /api/v1
 func main() {
 	var (
 		port   = config.CONFIG.Server.Port

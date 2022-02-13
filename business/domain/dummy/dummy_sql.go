@@ -46,7 +46,7 @@ func getDummyListSQL() ([]model.Dummy, common.Error) {
 	return dummies, common.Error{}
 }
 
-func getDummySQL(id string) (model.Dummy, common.Error) {
+func getDummyByIDSQL(id string) (model.Dummy, common.Error) {
 
 	var data model.Dummy
 	if err := db.QueryRow(GET_DUMMY_BY_ID_STATEMENT, id).Scan(
